@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import './App.css';
 import Axios from 'axios';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Home } from './Pages/Home';
+import { Menu } from './Pages/Menu';
+import { Contact } from './Pages/Contact';
+import { Navbar } from './Navbar';
+
 // import User from './User';
 
 // import { Task } from './Task';
@@ -10,14 +16,16 @@ import Axios from 'axios';
 // .then((data) => {
 //   console.log(data);
 // })
+export const AppContext = createContext();
 function App() {
-  const [value, setValue] = useState("");
-  const fetchPartyData = (excuse) => {
-    Axios.get(`https://excuser-three.vercel.app/v1/excuse/${excuse}/`).then((res) => {
-      setValue(res.data[0].excuse);
-    })
+  const [username, setUserName] = useState("chulbul");
+  // const [value, setValue] = useState("");
+  // const fetchPartyData = (excuse) => {
+  //   Axios.get(`https://excuser-three.vercel.app/v1/excuse/${excuse}/`).then((res) => {
+  //     setValue(res.data[0].excuse);
+  //   })
 
-  }
+  // }
   // const [ageValue,setAgeValue] = useState(null);
   // const fetchData = () => {
   //   Axios.get(`https://api.agify.io/?name=${name}`).then((res) => {
@@ -74,11 +82,22 @@ function App() {
   //const [showText, setShowText] = useState(true);
   return (
     <div className=" App mt-10">
-      <h1 className='text-lg subpixel-antialiased'>Generate an excuse</h1>
+      <AppContext.Provider value={{username,setUserName}}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Home  />} />
+            <Route path='/menu' element={<Menu  />} />
+            <Route path='/contact' element={<Contact />} />
+            <Route path='*' element={<h1>Page not found </h1>} />
+          </Routes>
+        </Router>
+      </AppContext.Provider>
+      {/* <h1 className='text-lg subpixel-antialiased'>Generate an excuse</h1>
       <button className='border-2 mt-6  p-2 bg-blue-400 rounded-md'onClick={() => fetchPartyData("party")}>Party</button>
       <button className='border-2 mt-6  p-2 bg-blue-400 rounded-md' onClick={() => fetchPartyData("family")}>Family</button>
       <button className='border-2 mt-6  p-2 bg-blue-400 rounded-md' onClick={() => fetchPartyData("office")}>Office</button>
-      <p className='text-blue-600'>{value}</p>
+      <p className='text-blue-600'>{value}</p> */}
       {/* <input className='border-2 border-black p-3' placeholder='type here ..' onChange={(event) => {
         setName(event.target.value);
       }}></input>
