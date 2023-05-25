@@ -6,6 +6,8 @@ import { Home } from './Pages/Home';
 import { Menu } from './Pages/Menu';
 import { Contact } from './Pages/Contact';
 import { Navbar } from './Navbar';
+import { QueryClient,QueryClientProvider } from '@tanstack/react-query';
+import { Form } from './Pages/Form';
 
 // import User from './User';
 
@@ -18,6 +20,7 @@ import { Navbar } from './Navbar';
 // })
 export const AppContext = createContext();
 function App() {
+  const client = new QueryClient();
   const [username, setUserName] = useState("chulbul");
   // const [value, setValue] = useState("");
   // const fetchPartyData = (excuse) => {
@@ -81,8 +84,9 @@ function App() {
 
   //const [showText, setShowText] = useState(true);
   return (
-    <div className=" App mt-10">
-      <AppContext.Provider value={{username,setUserName}}>
+    <div className=" flex items-center mt-24 flex-col border-2 ">  
+    <Form />
+      {/* <QueryClientProvider client={client}>   
         <Router>
           <Navbar />
           <Routes>
@@ -92,7 +96,7 @@ function App() {
             <Route path='*' element={<h1>Page not found </h1>} />
           </Routes>
         </Router>
-      </AppContext.Provider>
+      </QueryClientProvider > */}
       {/* <h1 className='text-lg subpixel-antialiased'>Generate an excuse</h1>
       <button className='border-2 mt-6  p-2 bg-blue-400 rounded-md'onClick={() => fetchPartyData("party")}>Party</button>
       <button className='border-2 mt-6  p-2 bg-blue-400 rounded-md' onClick={() => fetchPartyData("family")}>Family</button>
